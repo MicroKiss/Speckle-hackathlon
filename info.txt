@@ -1,0 +1,16 @@
+https://speckle.systems/tutorials/create-your-first-speckle-app-using-only-python/
+https://speckle.guide/dev/python.html
+https://github.com/twoolie/NBT
+
+
+
+ötletek:
+- Doom map visualizer: classic doom pályákból 3d mapet generálunk ( v bármi más játékot ami régen 2d volt és könnyen elréhető a map adata)
+- minecraft pályarész kinyerése
+- Analiser visualizer: valamit feldolgozunk és megjelenítjük 3d ben az arányokat. pl szövegelemzés és a betűk entrópiája vagy html oldalon tag ek számosságának vagy méretének ábrázolsáa kockákkal stb.
+- gallery általunk készített képeket egy mappábó lelrendetzi múzeum szerűen és ezt lehet nézegetni ( ah lehet képeket feltölteni)
+- random ház generátor: néhány paraméter pl szobák száma, alapterület szobatípusko száma. és ebből random elrendezésbe 3d-s szobák generálása.
+
+nyert:
+- minecraft pályarész kinyerése
+https://github.com/DonoA/PyAnvilEditor
