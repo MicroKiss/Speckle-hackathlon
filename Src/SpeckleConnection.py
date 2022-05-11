@@ -1,4 +1,3 @@
-from distutils.log import debug
 import personal as PERSONAL
 from specklepy.api.client import SpeckleClient
 from specklepy.api.credentials import get_account_from_token
@@ -25,4 +24,3 @@ def Send (obj:Base):
         object_id=hash, 
         message="New commit at : "+ now,
         )
-    debug (commid_id)

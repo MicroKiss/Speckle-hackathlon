@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 */personal.py
+
+cache/
+logs/

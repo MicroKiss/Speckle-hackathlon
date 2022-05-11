@@ -1,12 +1,13 @@
+from amulet import Block
 
 class BlockData:
-  def __init__(self, x:int, y:int, z:int, id:int):
+  def __init__(self, x:int, y:int, z:int, block: Block):
     self.x = x
     self.y = y
     self.z = z
-    self.id = id
+    self.block = block
 
-
+"""
 def GetDummyBlockDatas () ->list :
   blocks = []
   blocks.append(BlockData(0,-3,-2,1))
@@ -18,3 +19,4 @@ def GetDummyBlockDatas () ->list :
   blocks.append(BlockData(4,2,4,7))
   blocks.append(BlockData(3,1,1,8))
   return blocks
+"""
