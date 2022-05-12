@@ -14,73 +14,83 @@ class Fence (
     mainFence: Box = None
     sideFences: Base = None
 
+
+
+def CreateWestSide (x: int, y: int, z: int, mat:int) -> Base:
+    westSide = Base()
+    planeLower = Plane.from_list(
+        [x - 0.5 + sideFenceLength / 2, y, z + lowerSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+    lower = Box(xSize=intervalSideFence, ySize=interval2Middle,
+                zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
+    lower.renderMaterial = RenderMaterial(diffuse=mat)
+
+    westSide.lower = lower
+    planeUpper = Plane.from_list(
+        [x - 0.5 + sideFenceLength / 2, y, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+    upper = Box(xSize=intervalSideFence, ySize=interval2Middle,
+                zSize=intervalLowerSideFenceHeight, basePlane=planeUpper)
+    upper.renderMaterial = RenderMaterial(diffuse=mat)
+    westSide.upper = upper
+    return westSide
+
+def CreateEastSide (x: int, y: int, z: int, mat:int) -> Base:
+    eastSide = Base()
+    planeLower = Plane.from_list(
+        [x + 0.5 - sideFenceLength / 2, y, z + lowerSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+    lower = Box(xSize=intervalSideFence, ySize=interval2Middle,
+                zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
+    lower.renderMaterial = RenderMaterial(diffuse=mat)
+    eastSide.lower = lower
+    planeUpper = Plane.from_list(
+        [x + 0.5 - sideFenceLength / 2, y, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+    upper = Box(xSize=intervalSideFence, ySize=interval2Middle,
+                zSize=intervalLowerSideFenceHeight, basePlane=planeUpper)
+    upper.renderMaterial = RenderMaterial(diffuse=mat)
+    eastSide.upper = upper
+    return eastSide
+
+def CreateNorthSide (x: int, y: int, z: int, mat:int) -> Base:
+    northSide = Base()
+    planeUpper = Plane.from_list(
+        [x, y + 0.5 - sideFenceLength / 2, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+    upper = Box(xSize=interval2Middle, ySize=intervalSideFence,
+                zSize=intervalLowerSideFenceHeight, basePlane=planeUpper)
+    upper.renderMaterial = RenderMaterial(diffuse=mat)
+    planeLower = Plane.from_list(
+        [x, y + 0.5 - sideFenceLength / 2, z + lowerSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+    lower = Box(xSize=interval2Middle, ySize=intervalSideFence,
+                zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
+    lower.renderMaterial = RenderMaterial(diffuse=mat)
+    northSide.lower = lower
+    northSide.upper = upper
+    return northSide
+
+def CreateSouthSide (x: int, y: int, z: int, mat:int) -> Base:
+    southSide = Base()
+    planeUpper = Plane.from_list(
+        [x, y - 0.5 + sideFenceLength / 2, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+    upper = Box(xSize=interval2Middle, ySize=intervalSideFence,
+                zSize=intervalLowerSideFenceHeight, basePlane=planeUpper)
+    upper.renderMaterial = RenderMaterial(diffuse=mat)
+    planeLower = Plane.from_list(
+        [x, y - 0.5 + sideFenceLength / 2, z + lowerSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+    lower = Box(xSize=interval2Middle, ySize=intervalSideFence,
+                zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
+    lower.renderMaterial = RenderMaterial(diffuse=mat)
+    southSide.lower = lower
+    southSide.upper = upper
+    return southSide
+
 def CreateSideFences(x: int, y: int, z: int, mat: int, properties: dict) -> Base:
     ret = Base()
     if (properties["west"] == "true"):
-        westSide = Base()
-        planeLower = Plane.from_list(
-            [x - 0.5 + sideFenceLength / 2, y, z + lowerSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-        lower = Box(xSize=intervalSideFence, ySize=interval2Middle,
-                    zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
-        lower.renderMaterial = RenderMaterial(diffuse=mat)
-
-        westSide.lower = lower
-        planeUpper = Plane.from_list(
-            [x - 0.5 + sideFenceLength / 2, y, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-        upper = Box(xSize=intervalSideFence, ySize=interval2Middle,
-                    zSize=intervalLowerSideFenceHeight, basePlane=planeUpper)
-        upper.renderMaterial = RenderMaterial(diffuse=mat)
-        westSide.upper = upper
-        ret.westSide = westSide
-
+        ret.westSide = CreateWestSide (x,y,z,mat)
     if (properties["east"] == "true"):
-        eastSide = Base()
-        planeLower = Plane.from_list(
-            [x + 0.5 - sideFenceLength / 2, y, z + lowerSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-        lower = Box(xSize=intervalSideFence, ySize=interval2Middle,
-                    zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
-        lower.renderMaterial = RenderMaterial(diffuse=mat)
-        eastSide.lower = lower
-        planeUpper = Plane.from_list(
-            [x + 0.5 - sideFenceLength / 2, y, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-        upper = Box(xSize=intervalSideFence, ySize=interval2Middle,
-                    zSize=intervalLowerSideFenceHeight, basePlane=planeUpper)
-        upper.renderMaterial = RenderMaterial(diffuse=mat)
-        eastSide.upper = upper
-        ret.eastSide = eastSide
-
-    if (properties["south"] == "true"):
-        southSide = Base()
-        planeUpper = Plane.from_list(
-            [x, y + 0.5 - sideFenceLength / 2, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-        upper = Box(xSize=interval2Middle, ySize=intervalSideFence,
-                    zSize=intervalLowerSideFenceHeight, basePlane=planeUpper)
-        upper.renderMaterial = RenderMaterial(diffuse=mat)
-        planeLower = Plane.from_list(
-            [x, y + 0.5 - sideFenceLength / 2, z + lowerSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-        lower = Box(xSize=interval2Middle, ySize=intervalSideFence,
-                    zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
-        lower.renderMaterial = RenderMaterial(diffuse=mat)
-        southSide.lower = lower
-        southSide.upper = upper
-        ret.southSide = southSide
-
+        ret.eastSide = CreateEastSide (x,y,z,mat)
     if (properties["north"] == "true"):
-        northSide = Base()
-        planeUpper = Plane.from_list(
-            [x, y - 0.5 + sideFenceLength / 2, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-        upper = Box(xSize=interval2Middle, ySize=intervalSideFence,
-                    zSize=intervalLowerSideFenceHeight, basePlane=planeUpper)
-        upper.renderMaterial = RenderMaterial(diffuse=mat)
-        planeLower = Plane.from_list(
-            [x, y - 0.5 + sideFenceLength / 2, z + lowerSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-        lower = Box(xSize=interval2Middle, ySize=intervalSideFence,
-                    zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
-        lower.renderMaterial = RenderMaterial(diffuse=mat)
-        northSide.lower = lower
-        northSide.upper = upper
-        ret.northSide = northSide
-
+        ret.northSide = CreateNorthSide (x,y,z,mat)
+    if (properties["south"] == "true"):
+        ret.southSide = CreateSouthSide (x,y,z,mat)
     return ret
 
 

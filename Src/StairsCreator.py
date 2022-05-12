@@ -41,7 +41,7 @@ def GetStraightStairs (x: int, y: int, z: int, block: Block) -> Stairs:
     return ret
 
 #NorthWest
-def GetInnerStairs1(x: int, y: int, z: int, block: Block) -> Stairs:
+def GetInnerStairs3(x: int, y: int, z: int, block: Block) -> Stairs:
     base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
     steps = []
     step1 = CreateHalfBlock(*NorthWestCoords(x,y,z))
@@ -55,7 +55,7 @@ def GetInnerStairs1(x: int, y: int, z: int, block: Block) -> Stairs:
     ret.steps = steps
     return ret
 #NorthEast
-def GetInnerStairs2(x: int, y: int, z: int, block: Block) -> Stairs:
+def GetInnerStairs4(x: int, y: int, z: int, block: Block) -> Stairs:
     base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
     steps = []
     step1 = CreateHalfBlock(*NorthWestCoords(x,y,z))
@@ -69,7 +69,7 @@ def GetInnerStairs2(x: int, y: int, z: int, block: Block) -> Stairs:
     ret.steps = steps
     return ret
 #SouthWest
-def GetInnerStairs3(x: int, y: int, z: int, block: Block) -> Stairs:
+def GetInnerStairs1(x: int, y: int, z: int, block: Block) -> Stairs:
     base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
     steps = []
     step1 = CreateHalfBlock(*NorthWestCoords(x,y,z))
@@ -83,7 +83,7 @@ def GetInnerStairs3(x: int, y: int, z: int, block: Block) -> Stairs:
     ret.steps = steps
     return ret
 #SouthEast
-def GetInnerStairs4(x: int, y: int, z: int, block: Block) -> Stairs:
+def GetInnerStairs2(x: int, y: int, z: int, block: Block) -> Stairs:
     base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
     steps = []
     step1 = CreateHalfBlock(*NorthEastCoords(x,y,z))
@@ -97,7 +97,7 @@ def GetInnerStairs4(x: int, y: int, z: int, block: Block) -> Stairs:
     ret.steps = steps
     return ret
 #SouthEast
-def GetOuterStairs1(x: int, y: int, z:int, block: Block) -> Stairs:
+def GetOuterStairs4(x: int, y: int, z:int, block: Block) -> Stairs:
     base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
     steps = []
     step1 = CreateHalfBlock(*SouthEastCoords(x,y,z))
@@ -107,7 +107,7 @@ def GetOuterStairs1(x: int, y: int, z:int, block: Block) -> Stairs:
     ret.steps = steps
     return ret
 #SouthWest
-def GetOuterStairs2(x: int, y: int, z:int, block: Block) -> Stairs:
+def GetOuterStairs3(x: int, y: int, z:int, block: Block) -> Stairs:
     base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
     steps = []
     step1 = CreateHalfBlock(*SouthWestCoords(x,y,z))
@@ -117,7 +117,7 @@ def GetOuterStairs2(x: int, y: int, z:int, block: Block) -> Stairs:
     ret.steps = steps
     return ret
 #NorthWest
-def GetOuterStairs3(x: int, y: int, z:int, block: Block) -> Stairs:
+def GetOuterStairs2(x: int, y: int, z:int, block: Block) -> Stairs:
     base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
     steps = []
     step1 = CreateHalfBlock(*NorthWestCoords(x,y,z))
@@ -127,7 +127,7 @@ def GetOuterStairs3(x: int, y: int, z:int, block: Block) -> Stairs:
     ret.steps = steps
     return ret
 #NorthEast
-def GetOuterStairs4(x: int, y: int, z:int, block: Block) -> Stairs:
+def GetOuterStairs1(x: int, y: int, z:int, block: Block) -> Stairs:
     base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
     steps = []
     step1 = CreateHalfBlock(*NorthEastCoords(x,y,z))
@@ -152,14 +152,14 @@ def CreateStairsStep (x: int, y: int, z: int,block: Block) ->Stairs:
                     zSize=intervalHalf, basePlane=plane)
         step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
         return step
-    elif (block.properties["facing"] == "north"):
+    elif (block.properties["facing"] == "south"):
         plane = Plane.from_list(
             [x, y - 0.5 + stairsStepWidth / 2, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
         step = Box(xSize=intervalWhole, ySize=intervalHalf,
                     zSize=intervalHalf, basePlane=plane)
         step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
         return step
-    elif (block.properties["facing"] == "south"):
+    elif (block.properties["facing"] == "north"):
         plane = Plane.from_list(
             [x, y + 0.5 - stairsStepWidth / 2, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
         step = Box(xSize=intervalWhole, ySize=intervalHalf,
