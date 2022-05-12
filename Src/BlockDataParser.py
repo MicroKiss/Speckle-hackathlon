@@ -8,7 +8,7 @@ from AmuletExample import exampleBlockDatas, Block
 from FenceCreator import CreateFence
 from SlabCreator import CreateSlab
 from BlockCreator import CreateBlock
-from StairsCreator import CreateStairs, GetInnerStairs
+from StairsCreator import CreateStairs
 from utility import *
 
 
@@ -34,9 +34,6 @@ def ParseBlockDatas (blockDatas: list)-> list:
 if (__name__ == "__main__"):
     entities = []
     entities = ParseBlockDatas (exampleBlockDatas)
-    entities.append (GetInnerStairsLeft (3,3,-55,Block(namespace = "dummy", base_name="dummyname")))
-    entities.append (GetInnerStairsRight (3,4,-55,Block(namespace = "dummy", base_name="dummyname")))
-
     obj = Base()
     obj.add_chunkable_attrs (entities = 5000)
     obj.entities = entities
