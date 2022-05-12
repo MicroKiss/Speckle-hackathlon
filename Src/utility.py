@@ -5,6 +5,7 @@ PIXEL = 0.0625
 sideFenceHeight = 3*PIXEL
 sideFenceLength = 6*PIXEL
 sideFenceWidth = 2*PIXEL
+stairsStepWidth = 8*PIXEL
 intervalWhole = Interval(start=0, end=1)
 intervalHalf = Interval(start=0, end=0.5)
 interval4Middle = Interval(start=0, end=4*PIXEL)

@@ -8,6 +8,12 @@ from utility import *
 upperSideFenceZdiff = -PIXEL + 0.5 - sideFenceHeight / 2
 lowerSideFenceZdiff = - 3/2*PIXEL + sideFenceHeight / 2
 
+class Fence (
+    Base,
+    speckle_type="Fence"
+):
+    mainFence: Box = None
+    sideFences: Base = None
 
 def CreateSideFences(x: int, y: int, z: int, mat: int, properties: dict) -> Base:
     ret = Base()
@@ -84,14 +90,6 @@ def CreateMainFence(x: int, y: int, z: int, mat: int) -> Box:
               zSize=intervalWhole, basePlane=plane)
     ret.renderMaterial = RenderMaterial(diffuse=mat)
     return ret
-
-
-class Fence (
-    Base,
-    speckle_type="Fence"
-):
-    mainFence: Box = None
-    sideFences: Base = None
 
 
 def CreateFence(x: int, y: int, z: int, block: Block) -> Base:

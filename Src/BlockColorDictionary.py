@@ -1,5 +1,5 @@
 from collections import namedtuple
-Color = namedtuple('RGB','red, green, blue')
+Color = namedtuple('rgb','red, green, blue')
 
 class rgb(Color):
     def hex(self) -> int:
@@ -14,17 +14,24 @@ def GetBlockColor (blockName: str)-> int :
         return rgb (52,235,201).hex ()
     elif "grass" in blockName:
         return rgb (46,109,29).hex ()
+    elif "dirt" in blockName:
+        return rgb (151,108,74).hex ()
     elif "cobblestone" in blockName:
         return rgb (108,108,108).hex ()
     elif "stone" in blockName:
         return rgb (134,134,134).hex ()
+    elif "snow" in blockName:
+        return rgb (240,240,240).hex ()
+    elif "iron" in blockName:
+        return rgb (225,225,225).hex ()
+    elif "gold" in blockName:
+        return rgb (243,225,76).hex ()
     else:
         return rgb (165,0,255).hex () # purple
 
-
-colors['snow_block']        = rgb (240,240,240)
-colors['gold_block']        = rgb (243,225,76)
-colors['iron_block']        = rgb (225,225,225)
 colors['planks']            = rgb (168,139,87)
+colors['stairs']          = rgb (168,139,87)
+colors['slab']          = rgb (168,139,87)
+colors['fence']          = rgb (168,139,87)
 colors['red_sand']          = rgb (197,73,14)
 

@@ -4,6 +4,7 @@ from specklepy.objects.geometry import Interval, Box, Plane, Point
 from AmuletExample import Block
 from BlockColorDictionary import GetBlockColor
 from utility import *
+from SlabCreator import CreateLowerSlab
 """
 upperSideFenceZdiff = -PIXEL + 0.5 - sideFenceHeight / 2
 lowerSideFenceZdiff = - 3/2*PIXEL + sideFenceHeight / 2
@@ -76,19 +77,9 @@ def CreateSideFences(x: int, y: int, z: int, mat: int, properties: dict) -> Base
         ret.northSide = northSide
 
     return ret
-
-
-def CreateMainFence(x: int, y: int, z: int, mat: int) -> Box:
-    plane = Plane.from_list([x, y, z, 0, 0, 1, 1, 0, 0, 0, 1, 0])
-    ret = Box(xSize=interval4Middle, ySize=interval4Middle,
-              zSize=intervalWhole, basePlane=plane)
-    ret.renderMaterial = RenderMaterial(diffuse=mat)
-    return ret
-
-
-
-
 """
+
+
 class Stairs (
     Base,
     speckle_type="Stairs"
@@ -96,9 +87,50 @@ class Stairs (
     base: Box = None
     step: Box = None
 
+def CreateStairsStep (x: int, y: int, z: int,block: Block) ->Box:
+    if (block.properties["facing"] == "west"):
+        plane = Plane.from_list(
+            [x - 0.5 + stairsStepWidth / 2, y, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
+        step = Box(xSize=intervalHalf, ySize=intervalWhole,
+                    zSize=intervalHalf, basePlane=plane)
+        step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        return step
+        
+    if (block.properties["facing"] == "east"):
+        plane = Plane.from_list(
+            [x + 0.5 - stairsStepWidth / 2, y, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
+        step = Box(xSize=intervalHalf, ySize=intervalWhole,
+                    zSize=intervalHalf, basePlane=plane)
+        step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        return step
+        
+    if (block.properties["facing"] == "north"):
+        plane = Plane.from_list(
+            [x, y - 0.5 + stairsStepWidth / 2, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
+        step = Box(xSize=intervalWhole, ySize=intervalHalf,
+                    zSize=intervalHalf, basePlane=plane)
+        step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        return step
+
+    if (block.properties["facing"] == "south"):
+        plane = Plane.from_list(
+            [x, y + 0.5 - stairsStepWidth / 2, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
+        step = Box(xSize=intervalWhole, ySize=intervalHalf,
+                    zSize=intervalHalf, basePlane=plane)
+        step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        return step
+        
+
+
+def SwapStairsElements(stairs: Stairs) ->Base:
+    pass
+
+
+
 def CreateStairs(x: int, y: int, z: int, block: Block) -> Base:
-    ret = Stairs()
-    #ret.mainFence = CreateMainFence(x, y, z, GetBlockColor(block.base_name))
-    #ret.sideFences = CreateSideFences(
-    #    x, y, z, GetBlockColor(block.base_name), block.properties)
+    ret = Stairs ()
+    ret.base = CreateLowerSlab (x, y, z, GetBlockColor (block.base_name))
+    ret.step = CreateStairsStep (x, y, z, block)
+    if (block.properties["half"] == "top"):
+        SwapStairsElements (ret)
     return ret
