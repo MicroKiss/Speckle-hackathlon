@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import SpeckleConnection as SC
+import os
+from pathlib import Path
+from BlockData import BlockData
+import AmuletHelper
 
 
 st.set_page_config (
@@ -28,9 +32,48 @@ with header.expander ("About🔽", expanded=True):
 
 with input:
     st.subheader ("Inputs")
-    serverCol, tokenCol = st.columns ( [1, 3])
 
+    # World selection
+    saveDir : Path = Path(os.getenv('APPDATA'), '.minecraft', 'saves')
+    saveName : str = None
 
+    def processBlocks (blocks : 'list[BlockData]'):
+        for block in blocks:
+            print ("process")
+
+    def clearBlocks ():
+        print ("clear")
+
+    if not saveDir.exists():
+        st.text('Minecraft saves path not found.')
+    else:
+        saveNames = [save for save in saveDir.iterdir() if save.is_dir()]
+        saveName = st.selectbox(label="Select your savefile", options=saveNames, help="Select your savefile from the dropdown", format_func=(lambda x : x.name))
+
+    if not saveName == None:
+    # Input method selection 0 -> player, 1 -> bbox
+        selection = st.radio(label="Block area selection method", options=[0, 1],
+                            format_func=(lambda x : "Around player" if x == 0 else "Bounding Box by Coordinates"))
+        # player
+        if selection == 0:
+            r : int = st.number_input(label="Set the radius around the player", min_value=1, step=1)
+            st.button(label="Get", on_click=(lambda: processBlocks (AmuletHelper.GetBlockAroundPlayer(r, saveName))))
+        # bbox
+        else:
+            colX1, colY1, colZ1 = st.columns([1, 1, 1])
+            x1 = colX1.number_input(label="x1", step=1, value=0)
+            y1 = colY1.number_input(label="y1", step=1, value=0)
+            z1 = colZ1.number_input(label="z1", step=1, value=0)
+            colX2, colY2, colZ2 = st.columns([1, 1, 1])
+            x2 = colX2.number_input(label="x2", step=1, value=0)
+            y2 = colY2.number_input(label="y2", step=1, value=0)
+            z2 = colZ2.number_input(label="z2", step=1, value=0)
+            (minX, maxX) = (x1, x2) if x1 < x2 else (x2, x1)
+            (minY, maxY) = (y1, y2) if y1 < y2 else (y2, y1)
+            (minZ, maxZ) = (z1, z2) if z1 < z2 else (z2, z1)
+            st.button(label="Get", on_click=(lambda: processBlocks(AmuletHelper.GetBlockFromBBox(minX, minY, minZ, maxX, maxY, maxZ, saveName))))
+
+    st.button(label="Clear", on_click=(lambda: clearBlocks()))
     branches = SC.client.branch.list (SC.stream.id)
     commits = SC.client.commit.list (SC.stream.id, limit=100)
 def commit2viewer(stream, commit, height=400) -> str:
