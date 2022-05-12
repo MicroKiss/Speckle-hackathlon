@@ -9,6 +9,7 @@ from FenceCreator import CreateFence
 from SlabCreator import CreateSlab
 from BlockCreator import CreateBlock
 from StairsCreator import CreateStairs
+from DoorCreator import CreateDoor
 from utility import *
 
 
@@ -25,6 +26,8 @@ def ParseBlockDatas (blockDatas: list)-> list:
             parsedBlockData = CreateSlab (blockData.x, blockData.y, blockData.z, blockData.block)
         elif "stairs" in name:
             parsedBlockData = CreateStairs (blockData.x, blockData.y, blockData.z, blockData.block)
+        elif "door" in name:
+            parsedBlockData = CreateDoor (blockData.x, blockData.y, blockData.z, blockData.block)
         else:
             parsedBlockData = CreateBlock (blockData.x, blockData.y, blockData.z, GetBlockColor (name))
         parsedBlockData.minecraftName = blockData.block.base_name
