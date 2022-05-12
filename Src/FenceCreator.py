@@ -1,7 +1,7 @@
 from specklepy.objects import Base
 from specklepy.objects.other import RenderMaterial
 from specklepy.objects.geometry import Interval, Box, Plane, Point
-from AmuletExample import Block
+from amulet import Block
 from BlockColorDictionary import GetBlockColor
 from utility import *
 

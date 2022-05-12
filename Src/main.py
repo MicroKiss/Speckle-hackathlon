@@ -45,9 +45,6 @@ with input:
         obj.entities = parsedDatas
         SC.Send (obj)
 
-    def clearBlocks ():
-        print ("clear")
-
     if not saveDir.exists():
         st.text('Minecraft saves path not found.')
     else:
@@ -77,7 +74,6 @@ with input:
             (minZ, maxZ) = (z1, z2) if z1 < z2 else (z2, z1)
             st.button(label="Get", on_click=(lambda: processBlocks(AmuletHelper.GetBlockFromBBox(minX, minY, minZ, maxX, maxY, maxZ, saveName))))
 
-    st.button(label="Clear", on_click=(lambda: clearBlocks()))
     branches = SC.client.branch.list (SC.stream.id)
     commits = SC.client.commit.list (SC.stream.id, limit=100)
 def commit2viewer(stream, commit, height=400) -> str:
