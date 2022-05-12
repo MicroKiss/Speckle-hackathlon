@@ -8,11 +8,12 @@ level = amulet.load_level("D:\\Speckle-hackathlon\\testFiles\\New World")
 
 
 exampleBlockDatas = []
-for i in range(-6, 9):
-    for j in range(1, 4):
-        block:Block = level.get_block(i, -60, j, "minecraft:overworld")
-        blockData: BlockData = BlockData(i, j, -60, block)
-        exampleBlockDatas.append(blockData)
-        if __name__ == "__main__":
-            print (block.base_name)
+for x in range(-10, 30):
+    for y in range(-20, 10):
+        for z in range (-61,-58):
+            block:Block = level.get_block(x, z, y, "minecraft:overworld")
+            blockData: BlockData = BlockData(x, y, z, block)
+            exampleBlockDatas.append(blockData)
+            if __name__ == "__main__":
+                print (block.base_name)
 

@@ -132,3 +132,4 @@ dmypy.json
 
 cache/
 logs/
+testFiles/New World/session.lock
