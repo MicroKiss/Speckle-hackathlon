@@ -36,3 +36,13 @@ def ParseBlockDatas (blockDatas: list)-> list:
         parsedBlockData.minecraftName = blockData.block.base_name
         parsedBlockDatas.append (parsedBlockData)
     return parsedBlockDatas
+
+
+
+if (__name__ == "__main__"):
+    entities = []
+    entities = ParseBlockDatas (exampleBlockDatas)
+    obj = Base()
+    obj.add_chunkable_attrs (entities = 5000)
+    obj.entities = entities
+    SpeckleConnection.Send (obj)
