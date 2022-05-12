@@ -29,5 +29,5 @@ def __GetBlocksFromBBox (minX : int, minY : int, minZ : int, maxX : int, maxY : 
             for z in range (minZ, maxZ):
                 block : Block = level.get_block (x, y, z, "minecraft:overworld")
                 if not block.base_name in FILTERED_BLOCKS:
-                    result.append (BlockData (x, z, y, block))
+                    result.append (BlockData (x, -z, y, block))
     return result
