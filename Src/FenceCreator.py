@@ -9,8 +9,7 @@ upperSideFenceZdiff = -PIXEL + 0.5 - sideFenceHeight / 2
 lowerSideFenceZdiff = - 3/2*PIXEL + sideFenceHeight / 2
 
 class Fence (
-    Base,
-    speckle_type="Fence"
+    Base
 ):
     mainFence: Box = None
     sideFences: Base = None
@@ -24,6 +23,7 @@ def CreateSideFences(x: int, y: int, z: int, mat: int, properties: dict) -> Base
         lower = Box(xSize=intervalSideFence, ySize=interval2Middle,
                     zSize=intervalLowerSideFenceHeight, basePlane=planeLower)
         lower.renderMaterial = RenderMaterial(diffuse=mat)
+
         westSide.lower = lower
         planeUpper = Plane.from_list(
             [x - 0.5 + sideFenceLength / 2, y, z + upperSideFenceZdiff, 0, 0, 1, 1, 0, 0, 0, 1, 0])

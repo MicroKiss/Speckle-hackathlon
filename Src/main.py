@@ -6,7 +6,8 @@ import os
 from pathlib import Path
 from BlockData import BlockData
 import AmuletHelper
-
+from  BlockDataParser import ParseBlockDatas
+from specklepy.objects import Base
 
 st.set_page_config (
     page_title="Minecraft building visualizer",
@@ -38,8 +39,11 @@ with input:
     saveName : str = None
 
     def processBlocks (blocks : 'list[BlockData]'):
-        for block in blocks:
-            print ("process")
+        parsedDatas = ParseBlockDatas (blocks)
+        obj = Base()
+        obj.add_chunkable_attrs (entities = 5000)
+        obj.entities = parsedDatas
+        SC.Send (obj)
 
     def clearBlocks ():
         print ("clear")
