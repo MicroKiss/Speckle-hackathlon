@@ -6,10 +6,23 @@ from utility import *
 
 materials:dict= {}
 colors:dict= {}
+glassColors: dict= {}
 
 class rgb(Color):
     def hex(self) -> int:
         return int ('{:02X}{:02X}{:02X}'.format(self.red,self.green,self.blue),16)
+
+
+def GetGlassColorKey (blockName : str)-> str :
+    if (blockName == "glass" or blockName == "glass_pane"):
+        return blockName
+    elif ("tinted" in blockName):
+        return "tinted"
+    elif ("stained_glass_pane" in blockName):
+        return blockName[:-19]
+    else:
+        return blockName[:14]
+
 
 def GetBlockColor (blockName: str)-> int :
     if (blockName in colors.keys()):
@@ -36,8 +49,30 @@ def GetBlockColor (blockName: str)-> int :
         return rgb (233,226,203).hex ()
     elif "andesite" in blockName:
         return materials["andesite"].hex ()
+    elif "glass" in blockName:
+        return glassColors[GetGlassColorKey(blockName)].hex ()
     else:
         return rgb (165,0,255).hex () # purple
+
+# TODO actual colors
+glassColors['glass'] = rgb (1,2,3)
+glassColors['tinted'] = rgb (1,2,3)
+glassColors['white'] = rgb (1,2,3)
+glassColors['orange'] = rgb (1,2,3)
+glassColors['magenta'] = rgb (1,2,3)
+glassColors['light_blue'] = rgb (1,2,3)
+glassColors['yellow'] = rgb (1,2,3)
+glassColors['lime'] = rgb (1,2,3)
+glassColors['pink'] = rgb (1,2,3)
+glassColors['gray'] = rgb (1,2,3)
+glassColors['light_grey'] = rgb (1,2,3)
+glassColors['cyan'] = rgb (1,2,3)
+glassColors['purple'] = rgb (1,2,3)
+glassColors['blue'] = rgb (1,2,3)
+glassColors['brown'] = rgb (1,2,3)
+glassColors['green'] = rgb (1,2,3)
+glassColors['red'] = rgb (1,2,3)
+glassColors['black'] = rgb (1,2,3)
 
 colors['planks']            = rgb (168,139,87)
 colors['stairs']          = rgb (168,139,87)
