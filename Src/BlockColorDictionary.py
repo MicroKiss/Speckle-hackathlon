@@ -50,7 +50,11 @@ def GetBlockColor (blockName: str)-> int :
     elif "andesite" in blockName:
         return materials["andesite"].hex ()
     elif "glass" in blockName:
-        return glassColors[GetGlassColorKey(blockName)].hex ()
+        try:
+            return glassColors[GetGlassColorKey(blockName)].hex ()
+        except:
+            WRITEDEBUG (str(GetGlassColorKey(blockName)))
+            return rgb(1,1,1).hex ()
     else:
         return rgb (165,0,255).hex () # purple
 
@@ -73,6 +77,8 @@ glassColors['brown'] = rgb (1,2,3)
 glassColors['green'] = rgb (1,2,3)
 glassColors['red'] = rgb (1,2,3)
 glassColors['black'] = rgb (1,2,3)
+glassColors['stained_glass'] = rgb (1,2,3)
+glassColors['stained_glass_pane'] = rgb (1,2,3)
 
 colors['planks']            = rgb (168,139,87)
 colors['stairs']          = rgb (168,139,87)
@@ -132,7 +138,7 @@ materials["sandstone"] = rgb(214,203,160)
 
 
 def GetMaterial (block: Block) -> RenderMaterial:
-    mat = RenderMaterial() #diffuse=mat
+    mat: RenderMaterial = RenderMaterial() #diffuse=mat
     if hasattr(block,'properties') and ("material" in block.properties):
         try:
             mat.diffuse = GetColorFromMaterial(block.properties["material"])
@@ -141,6 +147,9 @@ def GetMaterial (block: Block) -> RenderMaterial:
     else:
         name: str = block.base_name
         mat.diffuse=GetBlockColor (name)
+    
+    if ("glass" in block.base_name):
+        mat.opacity = 0.2
     return mat
 
 def GetColorFromMaterial (mat :str) -> Color:

@@ -13,7 +13,7 @@ from GateCreator import CreateGate
 from GlassCreator import CreateGlass
 from utility import *
 
-skippedElements = ["air", "chain"]
+skippedElements = ["air", "chain","flower_pot","head","carpet","scaffolding","lantern","barrel","chest"]
 
 def ParseBlockDatas (blockDatas: list)-> list:
     parsedBlockDatas = []
@@ -25,7 +25,7 @@ def ParseBlockDatas (blockDatas: list)-> list:
             parsedBlockData = CreateFence (blockData.x, blockData.y, blockData.z, blockData.block)
         elif "fence_gate" == name:
             parsedBlockData = CreateGate (blockData.x, blockData.y, blockData.z, blockData.block)
-        elif "glass_pane" == name or "iron_bars" == name:
+        elif "glass_pane" in name or "iron_bars" == name:
             parsedBlockData = CreateGlass (blockData.x, blockData.y, blockData.z, blockData.block)
         elif "slab" == name:
             parsedBlockData = CreateSlab (blockData.x, blockData.y, blockData.z, blockData.block)
@@ -37,7 +37,7 @@ def ParseBlockDatas (blockDatas: list)-> list:
             parsedBlockData = CreateWall (blockData.x, blockData.y, blockData.z, blockData.block)
         else:
             parsedBlockData = CreateBlock (blockData.x, blockData.y, blockData.z, blockData.block)
-        
+        parsedBlockData.minecraftName = name
         parsedBlockDatas.append (parsedBlockData)
     return parsedBlockDatas
 
