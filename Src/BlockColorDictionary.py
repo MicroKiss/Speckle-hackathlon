@@ -118,6 +118,7 @@ materials["waxed_weathered_cut_copper"] = rgb(158,114,106)
 materials["weathered_cut_copper"] = rgb(84,160,139)
 materials["prismarine_brick"] = rgb(88,148,139)
 materials["sandstone"] = rgb(214,203,160)
+materials["cut_sandstone"] = rgb(214,203,160)
 
 
 def GetGlassMaterial (color:str):

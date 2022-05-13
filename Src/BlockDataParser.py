@@ -12,6 +12,8 @@ from WallCreator import CreateWall
 from GateCreator import CreateGate
 from GlassCreator import CreateGlass
 from utility import *
+from pathlib import Path
+import os
 
 skippedElements = ["air", "chain","flower_pot","head","carpet","scaffolding","lantern","barrel","chest"]
 
@@ -41,10 +43,10 @@ def ParseBlockDatas (blockDatas: list)-> list:
         parsedBlockDatas.append (parsedBlockData)
     return parsedBlockDatas
 
-from AmuletExample import exampleBlockDatas
+from AmuletHelper import GetBlockAroundPlayer
 import SpeckleConnection as SC
 if __name__ == "__main__":
     obj = Base()
     obj.add_chunkable_attrs (entities = 5000)
-    obj.entities = ParseBlockDatas (exampleBlockDatas)
+    obj.entities = ParseBlockDatas (GetBlockAroundPlayer (20,Path(os.getenv('APPDATA'), '.minecraft', 'saves','Neo-GothicPalace_by_NevasBuildings')))
     SC.Send (obj)
