@@ -1,6 +1,6 @@
 from specklepy.objects import Base
 from specklepy.objects.other import RenderMaterial
-from specklepy.objects.geometry import Interval, Box, Plane, Point
+from specklepy.objects.geometry import Box, Plane
 from amulet import Block
 from BlockColorDictionary import GetBlockColor
 from utility import *
@@ -24,7 +24,7 @@ def CreateSideWalls(x: int, y: int, z: int, mat: int, properties: dict) -> Base:
     if (properties["west"] == "low"):
         westSide = Base()
         plane = Plane.from_list(
-            [x - (8*PIXEL/sideWallLength) + sideWallLength, y, z - 1 + height, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+            [x - 0.5 + sideWallLength / 2, y, z - 1 + height, 0, 0, 1, 1, 0, 0, 0, 1, 0])
         side = Box(xSize=lengthInterval, ySize=interval6Middle,
                     zSize=heightInterval, basePlane=plane)
         side.renderMaterial = RenderMaterial(diffuse=mat)
@@ -35,7 +35,7 @@ def CreateSideWalls(x: int, y: int, z: int, mat: int, properties: dict) -> Base:
     if (properties["east"] == "low"):
         eastSide = Base()
         plane = Plane.from_list(
-            [x + (8*PIXEL/sideWallLength) - sideWallLength, y, z - 1 + height, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+            [x + 0.5 - sideWallLength / 2, y, z - 1 + height, 0, 0, 1, 1, 0, 0, 0, 1, 0])
         side = Box(xSize=lengthInterval, ySize=interval6Middle,
                     zSize=heightInterval, basePlane=plane)
         side.renderMaterial = RenderMaterial(diffuse=mat)
@@ -45,7 +45,7 @@ def CreateSideWalls(x: int, y: int, z: int, mat: int, properties: dict) -> Base:
     if (properties["north"] == "low"):
         southSide = Base()
         plane = Plane.from_list(
-            [x, y + (8*PIXEL/sideWallLength) - sideWallLength, z - 1 + height, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+            [x, y + 0.5 - sideWallLength / 2, z - 1 + height, 0, 0, 1, 1, 0, 0, 0, 1, 0])
         side = Box(xSize=interval6Middle, ySize=lengthInterval,
                     zSize=heightInterval, basePlane=plane)
         side.renderMaterial = RenderMaterial(diffuse=mat)
@@ -55,7 +55,7 @@ def CreateSideWalls(x: int, y: int, z: int, mat: int, properties: dict) -> Base:
     if (properties["south"] == "low"):
         northSide = Base()
         plane = Plane.from_list(
-            [x, y - (8*PIXEL/sideWallLength) + sideWallLength, z - 1 + height, 0, 0, 1, 1, 0, 0, 0, 1, 0])
+            [x, y - 0.5 + sideWallLength / 2, z - 1 + height, 0, 0, 1, 1, 0, 0, 0, 1, 0])
         side = Box(xSize=interval6Middle, ySize=lengthInterval,
                     zSize=heightInterval, basePlane=plane)
         side.renderMaterial = RenderMaterial(diffuse=mat)
