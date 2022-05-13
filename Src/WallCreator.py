@@ -67,7 +67,7 @@ def CreateSideWalls(x: int, y: int, z: int, block: Block) -> Base:
     return ret
 
 
-def CreateMainWall(x: int, y: int, z: int, block: Block) -> Box:
+def CreateMainWall(x: int, y: int, z: int, block: Block) -> Base:
     if block.properties["up"] == "true":
         height = 1
         width = 8*PIXEL
