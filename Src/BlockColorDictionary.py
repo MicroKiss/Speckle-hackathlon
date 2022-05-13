@@ -12,7 +12,7 @@ class rgb(Color):
     def hex(self) -> int:
         return int ('{:02X}{:02X}{:02X}'.format(self.red,self.green,self.blue),16)
 
-
+# ez itt még rossz TODO: implement ha stained glass pane akkor vna egy color attribútum ami alapján ki kell kérni a zsínt és az alapján színt állítani
 def GetGlassColorKey (blockName : str)-> str :
     if (blockName == "glass" or blockName == "glass_pane"):
         return blockName
@@ -51,7 +51,7 @@ def GetBlockColor (blockName: str)-> int :
         return materials["andesite"].hex ()
     elif "glass" in blockName:
         try:
-            return glassColors[GetGlassColorKey(blockName)].hex ()
+            return glassColors[str(GetGlassColorKey(blockName))].hex ()
         except:
             WRITEDEBUG (str(GetGlassColorKey(blockName)))
             return rgb(1,1,1).hex ()
