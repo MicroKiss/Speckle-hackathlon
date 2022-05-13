@@ -73,8 +73,12 @@ def CreateMainGlass(x: int, y: int, z: int, block: Block) -> Base:
 
 
 def CreateGlass(x: int, y: int, z: int, block: Block) -> Base:
+    if (block.base_name == "stained_glass"):
+        pass
+
     ret = Glass()
-    ret.mainFence = CreateMainGlass(x, y, z, block)
+    ret.mainGlass = CreateMainGlass(x, y, z, block)
+    ret.mainGlass.name = block.base_name
     ret.sideWalls = CreateSideGlass(
         x, y, z, block)
     return ret

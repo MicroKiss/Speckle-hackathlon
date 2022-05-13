@@ -12,17 +12,6 @@ class rgb(Color):
     def hex(self) -> int:
         return int ('{:02X}{:02X}{:02X}'.format(self.red,self.green,self.blue),16)
 
-# ez itt még rossz TODO: implement ha stained glass pane akkor vna egy color attribútum ami alapján ki kell kérni a zsínt és az alapján színt állítani
-def GetGlassColorKey (blockName : str)-> str :
-    if (blockName == "glass" or blockName == "glass_pane"):
-        return blockName
-    elif ("tinted" in blockName):
-        return "tinted"
-    elif ("stained_glass_pane" in blockName):
-        return blockName[:-19]
-    else:
-        return blockName[:14]
-
 
 def GetBlockColor (blockName: str)-> int :
     if (blockName in colors.keys()):
@@ -49,36 +38,27 @@ def GetBlockColor (blockName: str)-> int :
         return rgb (233,226,203).hex ()
     elif "andesite" in blockName:
         return materials["andesite"].hex ()
-    elif "glass" in blockName:
-        try:
-            return glassColors[str(GetGlassColorKey(blockName))].hex ()
-        except:
-            WRITEDEBUG (str(GetGlassColorKey(blockName)))
-            return rgb(1,1,1).hex ()
     else:
         return rgb (165,0,255).hex () # purple
 
-# TODO actual colors
-glassColors['glass'] = rgb (1,2,3)
-glassColors['tinted'] = rgb (1,2,3)
-glassColors['white'] = rgb (1,2,3)
-glassColors['orange'] = rgb (1,2,3)
-glassColors['magenta'] = rgb (1,2,3)
-glassColors['light_blue'] = rgb (1,2,3)
-glassColors['yellow'] = rgb (1,2,3)
-glassColors['lime'] = rgb (1,2,3)
-glassColors['pink'] = rgb (1,2,3)
-glassColors['gray'] = rgb (1,2,3)
-glassColors['light_grey'] = rgb (1,2,3)
-glassColors['cyan'] = rgb (1,2,3)
-glassColors['purple'] = rgb (1,2,3)
-glassColors['blue'] = rgb (1,2,3)
-glassColors['brown'] = rgb (1,2,3)
-glassColors['green'] = rgb (1,2,3)
-glassColors['red'] = rgb (1,2,3)
-glassColors['black'] = rgb (1,2,3)
-glassColors['stained_glass'] = rgb (1,2,3)
-glassColors['stained_glass_pane'] = rgb (1,2,3)
+#glassColors['glass'] = rgb (1,2,3)
+
+glassColors['black'] = rgb ( 0,0,0)
+glassColors['blue'] = rgb(0, 0, 255)
+glassColors['brown'] = rgb (165,42,42)
+glassColors['cyan'] = rgb (0,255,255)
+glassColors['gray'] = rgb(128,128,128)
+glassColors['green'] = rgb(0,255,0)
+glassColors['light_blue'] = rgb (173, 216, 230)
+glassColors['light_gray'] = rgb (200,200,200)
+glassColors['lime'] = rgb(191,255,0)
+glassColors['magenta'] = rgb(255,0,255)
+glassColors['orange'] = rgb  (255, 165, 0)
+glassColors['pink'] = rgb(255,105,180)
+glassColors['purple'] = rgb(128,0,128)
+glassColors['red'] = rgb (255,0,0)
+glassColors['white'] = rgb (255,255,255)
+glassColors['yellow'] = rgb (255,255,0)
 
 colors['planks']            = rgb (168,139,87)
 colors['stairs']          = rgb (168,139,87)
@@ -104,6 +84,7 @@ materials["deepslate_brick"] = rgb(52,52,52)
 materials["deepslate_tile"] = rgb(34,34,34)
 materials["diorite"] = rgb(203,202,205)
 materials["end_stone_brick"] = rgb(223,233,172)
+materials["stone_brick"] = rgb(125,125,125)
 materials["exposed_cut_copper"] = rgb(137,97,81)
 materials["granite"] = rgb(189,133,114)
 materials["iron"] = rgb(162,162,162)
@@ -115,6 +96,7 @@ materials["oak"] = rgb(178,144,91)
 materials["oxidized_cut_copper"] = rgb(80,152,128)
 materials["polished_andesite"] = rgb(119,121,120)
 materials["polished_blackstone"] = rgb(25,21,25)
+materials["polished_blackstone_brick"] = rgb(25,21,25)
 materials["polished_deepslate"] = rgb(51,51,51)
 materials["polished_diorite"] = rgb(200,200,200)
 materials["polished_granite"] = rgb(145,98,84)
@@ -133,24 +115,37 @@ materials["waxed_cut_copper"] = rgb(157,84,62)
 materials["waxed_exposed_cut_copper"] = rgb(155,113,97)
 materials["waxed_oxidized_cut_copper"] = rgb(74,143,114)
 materials["waxed_weathered_cut_copper"] = rgb(158,114,106)
+materials["weathered_cut_copper"] = rgb(84,160,139)
 materials["prismarine_brick"] = rgb(88,148,139)
 materials["sandstone"] = rgb(214,203,160)
 
 
+def GetGlassMaterial (color:str):
+    try:
+        return glassColors[color].hex ()
+    except :
+        WRITEDEBUG (color)
+        return rgb(200,200,200).hex ()
+
 def GetMaterial (block: Block) -> RenderMaterial:
-    mat: RenderMaterial = RenderMaterial() #diffuse=mat
-    if hasattr(block,'properties') and ("material" in block.properties):
+    mat: RenderMaterial = RenderMaterial() 
+    if ("glass" in block.base_name ):
+        if ('color' in block.properties):
+            mat.diffuse = GetGlassMaterial (str (block.properties["color"]))
+        else:
+            mat.diffuse = rgb(200,200,200).hex ()
+        mat.opacity = 0.5
+    elif hasattr(block,'properties') and ("material" in block.properties):
         try:
-            mat.diffuse = GetColorFromMaterial(block.properties["material"])
+            mat.diffuse = GetColorFromMaterial(str (block.properties["material"]))
         except:
             WRITEDEBUG (str (block.properties["material"]))
+            mat.diffuse = rgb(200,200,200).hex ()
     else:
         name: str = block.base_name
         mat.diffuse=GetBlockColor (name)
     
-    if ("glass" in block.base_name):
-        mat.opacity = 0.2
     return mat
 
 def GetColorFromMaterial (mat :str) -> Color:
-    return materials[str (mat)].hex ()
+    return materials[mat].hex ()
