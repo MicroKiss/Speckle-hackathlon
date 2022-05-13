@@ -23,8 +23,8 @@ def ParseBlockDatas (blockDatas: list)-> list:
             continue
         elif "fence" == name:
             parsedBlockData = CreateFence (blockData.x, blockData.y, blockData.z, blockData.block)
-        #elif "fence_gate" == name:
-        #    parsedBlockData = CreateGate (blockData.x, blockData.y, blockData.z, blockData.block)
+        elif "fence_gate" == name:
+            parsedBlockData = CreateGate (blockData.x, blockData.y, blockData.z, blockData.block)
         #elif "glass_pane" == name:
         #    parsedBlockData = CreateGlass (blockData.x, blockData.y, blockData.z, blockData.block)
         elif "slab" == name:
