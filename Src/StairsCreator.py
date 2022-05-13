@@ -2,7 +2,7 @@ from specklepy.objects import Base
 from specklepy.objects.other import RenderMaterial
 from specklepy.objects.geometry import Interval, Box, Plane, Point
 from amulet import Block
-from BlockColorDictionary import GetBlockColor
+from BlockColorDictionary import GetMaterial
 from utility import *
 from SlabCreator import CreateLowerSlab
 
@@ -12,15 +12,11 @@ class Stairs (
     base: Box = None
     steps = None
 
-
-
 def CreateHalfBlock (x,y,z)->Box :
     plane = Plane.from_list(
     [x,y,z, 0, 0, 1, 1, 0, 0, 0, 1, 0])
     return  Box(xSize=intervalHalf, ySize=intervalHalf,
             zSize=intervalHalf, basePlane=plane)
-
-
 
 def NorthWestCoords (x,y,z):
     return (x - 0.5 + stairsStepWidth / 2, y - 0.5 + stairsStepWidth / 2, z + 0.25)
@@ -31,10 +27,9 @@ def SouthWestCoords (x,y,z):
 def SouthEastCoords (x,y,z):
     return (x + 0.5 - stairsStepWidth / 2, y + 0.5 - stairsStepWidth / 2, z + 0.25)
 
-
 def GetStraightStairs (x: int, y: int, z: int, block: Block) -> Stairs:
     ret = Stairs ()
-    ret.base = CreateLowerSlab (x, y, z, GetBlockColor (block.base_name))
+    ret.base = CreateLowerSlab (x, y, z, block)
     steps = list ()
     steps.append(CreateStairsStep (x, y, z, block))
     ret.steps = steps
@@ -42,7 +37,7 @@ def GetStraightStairs (x: int, y: int, z: int, block: Block) -> Stairs:
 
 #NorthWest
 def GetInnerStairs3(x: int, y: int, z: int, block: Block) -> Stairs:
-    base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
+    base = CreateLowerSlab(x, y, z, block)
     steps = []
     step1 = CreateHalfBlock(*NorthWestCoords(x,y,z))
     steps.append(step1)
@@ -56,7 +51,7 @@ def GetInnerStairs3(x: int, y: int, z: int, block: Block) -> Stairs:
     return ret
 #NorthEast
 def GetInnerStairs4(x: int, y: int, z: int, block: Block) -> Stairs:
-    base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
+    base = CreateLowerSlab(x, y, z, block)
     steps = []
     step1 = CreateHalfBlock(*NorthWestCoords(x,y,z))
     steps.append(step1)
@@ -70,7 +65,7 @@ def GetInnerStairs4(x: int, y: int, z: int, block: Block) -> Stairs:
     return ret
 #SouthWest
 def GetInnerStairs1(x: int, y: int, z: int, block: Block) -> Stairs:
-    base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
+    base = CreateLowerSlab(x, y, z, block)
     steps = []
     step1 = CreateHalfBlock(*NorthWestCoords(x,y,z))
     steps.append(step1)
@@ -84,7 +79,7 @@ def GetInnerStairs1(x: int, y: int, z: int, block: Block) -> Stairs:
     return ret
 #SouthEast
 def GetInnerStairs2(x: int, y: int, z: int, block: Block) -> Stairs:
-    base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
+    base = CreateLowerSlab(x, y, z, block)
     steps = []
     step1 = CreateHalfBlock(*NorthEastCoords(x,y,z))
     steps.append(step1)
@@ -98,7 +93,7 @@ def GetInnerStairs2(x: int, y: int, z: int, block: Block) -> Stairs:
     return ret
 #SouthEast
 def GetOuterStairs4(x: int, y: int, z:int, block: Block) -> Stairs:
-    base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
+    base = CreateLowerSlab(x, y, z, block)
     steps = []
     step1 = CreateHalfBlock(*SouthEastCoords(x,y,z))
     steps.append(step1)
@@ -108,7 +103,7 @@ def GetOuterStairs4(x: int, y: int, z:int, block: Block) -> Stairs:
     return ret
 #SouthWest
 def GetOuterStairs3(x: int, y: int, z:int, block: Block) -> Stairs:
-    base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
+    base = CreateLowerSlab(x, y, z, block)
     steps = []
     step1 = CreateHalfBlock(*SouthWestCoords(x,y,z))
     steps.append(step1)
@@ -118,7 +113,7 @@ def GetOuterStairs3(x: int, y: int, z:int, block: Block) -> Stairs:
     return ret
 #NorthWest
 def GetOuterStairs2(x: int, y: int, z:int, block: Block) -> Stairs:
-    base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
+    base = CreateLowerSlab(x, y, z, block)
     steps = []
     step1 = CreateHalfBlock(*NorthWestCoords(x,y,z))
     steps.append(step1)
@@ -128,7 +123,7 @@ def GetOuterStairs2(x: int, y: int, z:int, block: Block) -> Stairs:
     return ret
 #NorthEast
 def GetOuterStairs1(x: int, y: int, z:int, block: Block) -> Stairs:
-    base = CreateLowerSlab(x, y, z, GetBlockColor(block.base_name))
+    base = CreateLowerSlab(x, y, z, block)
     steps = []
     step1 = CreateHalfBlock(*NorthEastCoords(x,y,z))
     steps.append(step1)
@@ -143,28 +138,28 @@ def CreateStairsStep (x: int, y: int, z: int,block: Block) ->Stairs:
             [x - 0.5 + stairsStepWidth / 2, y, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
         step = Box(xSize=intervalHalf, ySize=intervalWhole,
                     zSize=intervalHalf, basePlane=plane)
-        step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        step.renderMaterial = GetMaterial (block)
         return step
     elif (block.properties["facing"] == "east"):
         plane = Plane.from_list(
             [x + 0.5 - stairsStepWidth / 2, y, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
         step = Box(xSize=intervalHalf, ySize=intervalWhole,
                     zSize=intervalHalf, basePlane=plane)
-        step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        step.renderMaterial = GetMaterial (block)
         return step
     elif (block.properties["facing"] == "south"):
         plane = Plane.from_list(
             [x, y - 0.5 + stairsStepWidth / 2, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
         step = Box(xSize=intervalWhole, ySize=intervalHalf,
                     zSize=intervalHalf, basePlane=plane)
-        step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        step.renderMaterial = GetMaterial (block)
         return step
     elif (block.properties["facing"] == "north"):
         plane = Plane.from_list(
             [x, y + 0.5 - stairsStepWidth / 2, z + 0.25 , 0, 0, 1, 1, 0, 0, 0, 1, 0])
         step = Box(xSize=intervalWhole, ySize=intervalHalf,
                     zSize=intervalHalf, basePlane=plane)
-        step.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        step.renderMaterial = GetMaterial (block)
         return step
 
 
@@ -206,11 +201,10 @@ def CreateStairs(x: int, y: int, z: int, block: Block) -> Stairs:
     else: 
         ret = GetStraightStairs (x,y,z,block)
 
-    mat = GetBlockColor(block.base_name)
-    ret.base.renderMaterial = RenderMaterial(diffuse=mat)
+    ret.base.renderMaterial = GetMaterial(block)
     ret.base["info"] = block.properties["facing" ] + block.properties["shape"]
     for s in ret.steps:
-        s.renderMaterial = RenderMaterial(diffuse=mat)
+        s.renderMaterial = GetMaterial(block)
 
     if (block.properties["half"] == "top"):
         SwapStairsElements (ret)

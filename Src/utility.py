@@ -1,6 +1,11 @@
 from specklepy.objects.geometry import Interval
 
-
+DEBUG = True
+def WRITEDEBUG (s:str):
+            f = open("demo.txt", "a")
+            f.write(s)
+            f.write("\n")
+            f.close()
 PIXEL = 0.0625
 
 def GetIntervalFromSize(size):

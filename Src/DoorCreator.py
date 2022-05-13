@@ -1,10 +1,9 @@
 from specklepy.objects.other import RenderMaterial
+from amulet import Block
 from specklepy.objects import Base
 from specklepy.objects.geometry import Box, Plane, Interval
 from utility import *
-from amulet import Block
-from BlockColorDictionary import GetBlockColor
-from BlockCreator import CreateBlock
+from BlockColorDictionary import GetMaterial
 
 doorWidth = 3*PIXEL
 intervalDoorWidth = Interval(start=0, end=doorWidth)
@@ -84,7 +83,6 @@ def CreateLowerDoor2(x: int, y: int, z: int, block: Block) -> Box:
 
 def CreateDoor(x: int, y: int, z: int, block: Block) -> Base:
     ret: Base = None
-    mat = GetBlockColor(block.base_name)
     if (block.properties["half"] == "upper"):
         if (((block.properties["facing"] == "west" or block.properties["facing"] == "east") and block.properties["open"] == "true")
                 or ((block.properties["facing"] == "north" or block.properties["facing"] == "south") and block.properties["open"] == "false")):
@@ -92,14 +90,14 @@ def CreateDoor(x: int, y: int, z: int, block: Block) -> Base:
         else:
             ret = CreateUpperDoor2(x, y, z, block)
         for p in ret.pieces:
-            p.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+            p.renderMaterial = GetMaterial(block)
     elif (block.properties["half"] == "lower"):
         if (((block.properties["facing"] == "west" or block.properties["facing"] == "east") and block.properties["open"] == "true")
                 or ((block.properties["facing"] == "north" or block.properties["facing"] == "south") and block.properties["open"] == "false")):
             ret = CreateLowerDoor1(x, y, z, block)
         else:
             ret = CreateLowerDoor2(x, y, z, block)
-        ret.renderMaterial = RenderMaterial(diffuse=GetBlockColor(block.base_name))
+        ret.renderMaterial = GetMaterial (block)
 
     ret.info = block.properties["facing"] + block.properties["open"]
     return ret
