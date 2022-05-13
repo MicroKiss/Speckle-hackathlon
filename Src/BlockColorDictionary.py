@@ -33,5 +33,6 @@ colors['planks']            = rgb (168,139,87)
 colors['stairs']          = rgb (168,139,87)
 colors['slab']          = rgb (168,139,87)
 colors['fence']          = rgb (168,139,87)
+colors['door']          = rgb (168,139,87)
 colors['red_sand']          = rgb (197,73,14)
 

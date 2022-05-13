@@ -24,3 +24,4 @@ def Send (obj:Base):
         object_id=hash, 
         message="New commit at : "+ now,
         )
+    print ("commit id: " + str(commid_id))
