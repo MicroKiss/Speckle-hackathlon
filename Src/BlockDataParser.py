@@ -9,6 +9,8 @@ from BlockCreator import CreateBlock
 from StairsCreator import CreateStairs
 from DoorCreator import CreateDoor
 from WallCreator import CreateWall
+from GateCreator import CreateGate
+from GlassCreator import CreateGlass
 from utility import *
 
 skippedElements = ["air", "chain"]
@@ -21,6 +23,10 @@ def ParseBlockDatas (blockDatas: list)-> list:
             continue
         elif "fence" == name:
             parsedBlockData = CreateFence (blockData.x, blockData.y, blockData.z, blockData.block)
+        #elif "fence_gate" == name:
+        #    parsedBlockData = CreateGate (blockData.x, blockData.y, blockData.z, blockData.block)
+        #elif "glass_pane" == name:
+        #    parsedBlockData = CreateGlass (blockData.x, blockData.y, blockData.z, blockData.block)
         elif "slab" == name:
             parsedBlockData = CreateSlab (blockData.x, blockData.y, blockData.z, blockData.block)
         elif "stairs" == name:
@@ -31,7 +37,7 @@ def ParseBlockDatas (blockDatas: list)-> list:
             parsedBlockData = CreateWall (blockData.x, blockData.y, blockData.z, blockData.block)
         else:
             parsedBlockData = CreateBlock (blockData.x, blockData.y, blockData.z, blockData.block)
-        parsedBlockData.minecraftName = blockData.block.base_name
+        
         parsedBlockDatas.append (parsedBlockData)
     return parsedBlockDatas
 
