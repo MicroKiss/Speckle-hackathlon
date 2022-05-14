@@ -1,8 +1,4 @@
-
 from specklepy.objects import Base
-from specklepy.objects.other import RenderMaterial
-from specklepy.objects.geometry import Box, Plane
-from amulet import Block
 from FenceCreator import CreateFence
 from SlabCreator import CreateSlab
 from BlockCreator import CreateBlock
@@ -15,7 +11,7 @@ from utility import *
 from pathlib import Path
 import os
 
-skippedElements = ["air", "chain","flower_pot","head","carpet","scaffolding","lantern","barrel","chest","bookshelf","wall_head","cobweb","fletching_table"]
+skippedElements = ["air", "chain","flower_pot","plant","head","carpet","scaffolding","lantern","barrel","chest","bookshelf","wall_head","cobweb","fletching_table","bamboo","wall_banner","torch"]
 
 def ParseBlockDatas (blockDatas: list)-> list:
     parsedBlockDatas = []

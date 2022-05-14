@@ -16,8 +16,38 @@ class rgb(Color):
 def GetBlockColor (blockName: str)-> int :
     if (blockName in colors.keys()):
         return colors[blockName].hex ()
+    elif "brick" in blockName:
+        return materials["brick"].hex ()
+    elif "anvil" in blockName:
+        return materials["brick"].hex ()
+    elif "quartz" in blockName:
+        return materials["quartz"].hex ()
     elif "diamond" in blockName:
         return rgb (52,235,201).hex ()
+    elif "campfire" in blockName:
+        return glassColors['brown'].hex ()
+    elif "bedrock" in blockName:
+        return rgb(49,49,49).hex ()
+    elif "gravel" in blockName:
+        return rgb(122,116,116).hex ()
+    elif "coal" in blockName:
+        return rgb(44,44,44).hex ()
+    elif "warped_nylium" in blockName:
+        return rgb(67,130,98).hex ()
+    elif "nylium" in blockName:
+        return rgb(148,24,24).hex ()
+    elif "deepslate" in blockName:
+        return rgb(28,28,28).hex ()
+    elif "calcite" in blockName:
+        return rgb(175,176,173).hex ()
+    elif "tuff" in blockName:
+        return rgb(137,137,133).hex ()
+    elif "podzol" in blockName:
+        return rgb(89,59,34).hex ()
+    elif "diorite" in blockName:
+        return rgb(148,148,148).hex ()
+    elif "granite" in blockName:
+        return rgb(153,104,86).hex ()
     elif "grass" in blockName:
         return rgb (46,109,29).hex ()
     elif "dirt" in blockName:
@@ -36,8 +66,20 @@ def GetBlockColor (blockName: str)-> int :
         return rgb (243,225,76).hex ()
     elif "sand" in blockName:
         return rgb (233,226,203).hex ()
+    elif "exposed_copper" in blockName:
+        return rgb(91,82,65).hex ()
+    elif "weathered_copper" in blockName:
+        return rgb(63,97,67).hex ()
+    elif "oxidized_copper" in blockName:
+        return rgb(90,151,114).hex ()
+    elif "copper" in blockName:
+        return rgb(205,106,76).hex ()
+    elif "netherite" in blockName:
+        return rgb(78,71,76).hex ()
     elif "andesite" in blockName:
         return materials["andesite"].hex ()
+    elif "plant" in blockName:
+        return rgb (0,140,0).hex ()
     else:
         return rgb (165,0,255).hex () # purple
 
@@ -45,7 +87,7 @@ def GetBlockColor (blockName: str)-> int :
 
 glassColors['black'] = rgb ( 0,0,0)
 glassColors['blue'] = rgb(0, 0, 255)
-glassColors['brown'] = rgb (165,42,42)
+glassColors['brown'] = 	rgb(139,69,19)
 glassColors['cyan'] = rgb (0,255,255)
 glassColors['gray'] = rgb(128,128,128)
 glassColors['green'] = rgb(0,255,0)
@@ -137,6 +179,27 @@ def GetMaterial (block: Block) -> RenderMaterial:
         else:
             mat.diffuse = rgb(200,200,200).hex ()
         mat.opacity = 0.5
+    elif ("leaves" in block.base_name):
+        mat.diffuse = rgb(0,200,0).hex ()
+        mat.opacity = 0.8
+    elif ("water" in block.base_name):
+        mat.diffuse = rgb(0,0,240).hex ()
+        mat.opacity = 0.5
+    elif ("terracotta" in block.base_name):
+        if ('color' in block.properties):
+            mat.diffuse = GetGlassMaterial (str (block.properties["color"]))
+        else:
+            mat.diffuse = rgb(200,200,200).hex ()
+    elif ("concrete_powder" in block.base_name):
+        if ('color' in block.properties):
+            mat.diffuse = GetGlassMaterial (str (block.properties["color"]))
+        else:
+            mat.diffuse = rgb(200,200,200).hex ()
+    elif ("wool" in block.base_name):
+        if ('color' in block.properties):
+            mat.diffuse = GetGlassMaterial (str (block.properties["color"]))
+        else:
+            mat.diffuse = rgb(200,200,200).hex ()
     elif hasattr(block,'properties') and ("material" in block.properties):
         try:
             mat.diffuse = GetColorFromMaterial(str (block.properties["material"]))
@@ -145,7 +208,7 @@ def GetMaterial (block: Block) -> RenderMaterial:
             mat.diffuse = rgb(200,200,200).hex ()
     else:
         name: str = block.base_name
-        mat.diffuse=GetBlockColor (name)
+        mat.diffuse=GetBlockColor (str (name))
     
     return mat
 

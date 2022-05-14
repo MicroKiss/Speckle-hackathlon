@@ -1,7 +1,6 @@
 import amulet
 from amulet import Block
 from BlockData import BlockData
-import types
 # load the level
 level = amulet.load_level("D:\\Speckle-hackathlon\\testFiles\\New World")
 #-1 -60 -1 től 1 -60 1 ig
