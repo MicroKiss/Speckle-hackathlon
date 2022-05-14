@@ -14,7 +14,6 @@ class Fence (
     sideFences: Base = None
 
 
-
 def CreateWestSide (x: int, y: int, z: int, block: Block) -> Base:
     westSide = Base()
     planeLower = Plane.from_list(

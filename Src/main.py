@@ -1,6 +1,4 @@
 import streamlit as st
-import pandas as pd
-import plotly.express as px
 import SpeckleConnection as SC
 import os
 from pathlib import Path
@@ -18,8 +16,6 @@ st.set_page_config (
 header  = st.container ()
 input   = st.container ()
 viewer  = st.container ()
-report  = st.container ()
-graphs  = st.container ()
 
 with header:
     st.title ("🎲Minecraft building visualizer🎲")

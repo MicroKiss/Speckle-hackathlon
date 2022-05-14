@@ -4,15 +4,12 @@ from amulet import Block
 from BlockColorDictionary import GetMaterial
 from utility import *
 
-
 class Gate (
     Base
 ):
     pieces = None
 
 #North South
-
-
 def CreateClosedPieces1(x: int, y: int, z: int, block: Block) -> 'list[Box]':
     pieces = []
     left = Box(xSize=Interval(start=0, end=2*PIXEL), ySize=Interval(start=0, end=2*PIXEL),
@@ -31,9 +28,8 @@ def CreateClosedPieces1(x: int, y: int, z: int, block: Block) -> 'list[Box]':
     pieces.append(bottom)
     pieces.append(middle)
     return pieces
+    
 #east west
-
-
 def CreateClosedPieces2(x: int, y: int, z: int, block: Block) -> 'list[Box]':
     pieces = []
     left = Box(ySize=Interval(start=0, end=2*PIXEL), xSize=Interval(start=0, end=2*PIXEL),
