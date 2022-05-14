@@ -15,11 +15,12 @@ from utility import *
 from pathlib import Path
 import os
 
-skippedElements = ["air", "chain","flower_pot","head","carpet","scaffolding","lantern","barrel","chest"]
+skippedElements = ["air", "chain","flower_pot","head","carpet","scaffolding","lantern","barrel","chest","bookshelf","wall_head","cobweb","fletching_table"]
 
 def ParseBlockDatas (blockDatas: list)-> list:
     parsedBlockDatas = []
     for blockData in blockDatas:
+        parsedBlockData = None
         name: str =  blockData.block.base_name
         if name in skippedElements:
             continue
@@ -40,13 +41,15 @@ def ParseBlockDatas (blockDatas: list)-> list:
         else:
             parsedBlockData = CreateBlock (blockData.x, blockData.y, blockData.z, blockData.block)
         parsedBlockData.minecraftName = name
-        parsedBlockDatas.append (parsedBlockData)
+        if (parsedBlockData!= None):
+            parsedBlockDatas.append (parsedBlockData)
     return parsedBlockDatas
 
 from AmuletHelper import GetBlockAroundPlayer
 import SpeckleConnection as SC
 if __name__ == "__main__":
     obj = Base()
-    obj.add_chunkable_attrs (entities = 5000)
-    obj.entities = ParseBlockDatas (GetBlockAroundPlayer (20,Path(os.getenv('APPDATA'), '.minecraft', 'saves','Neo-GothicPalace_by_NevasBuildings')))
+    obj.add_chunkable_attrs (entities = 100)
+    obj.entities = ParseBlockDatas (GetBlockAroundPlayer (50,Path(os.getenv('APPDATA'), '.minecraft', 'saves','Neo-GothicPalace_by_NevasBuildings')))
+    print (len (obj.entities))
     SC.Send (obj)

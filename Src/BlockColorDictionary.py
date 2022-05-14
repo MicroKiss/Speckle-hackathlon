@@ -61,6 +61,7 @@ glassColors['white'] = rgb (255,255,255)
 glassColors['yellow'] = rgb (255,255,0)
 
 colors['planks']            = rgb (168,139,87)
+colors['concrete']            = rgb(199,201,206)
 colors['stairs']          = rgb (168,139,87)
 colors['slab']          = rgb (168,139,87)
 colors['fence']          = rgb (168,139,87)
